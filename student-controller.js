@@ -1,7 +1,7 @@
 function StudentController() {
 
-   this.test = 'testing'
-  
+  this.test = 'testing'
+
   var studentService = new StudentService()
 
 
@@ -16,23 +16,33 @@ function StudentController() {
     for (var i = 0; i < roster.length; i++) {
       var student = roster[i];
 
-      rosterElem.innerHTML += '<tr><td>' + (i + 1) + '</td><td>' + student.name + '</td></tr>'
+      rosterElem.innerHTML += '<tr><td>' + student.id + '</td><td>' + student.name + '</td><td>' + student.phone + '</td></tr>'
       console.log(i, ' its working!!!')
     }
   }
 
-  this.handleReset = function(){
+  this.handleReset = function () {
     var students = studentService.getStudents()
     drawStudents(students)
   }
 
-  this.addStudent = function addStudent() {
+  this.addStudent = function addStudent(e) {
+    
+    event.preventDefault()
 
-    var studentName = document.getElementById('new-student').value
+    var form = event.target
 
-    studentService.addStudent(studentName)
+    var studentName = form['student-name'].value
+    var studentPhone = form['student-phone'].value
+    var studentBio = form['student-bio'].value
+
+    studentService.addStudent(studentName, studentPhone)
 
     this.handleReset()
+  }
+
+  this.test = function (event) {
+    console.log('mouse moving', event)
   }
 
 
